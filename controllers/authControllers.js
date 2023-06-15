@@ -47,7 +47,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordResetExpires: req.body.passwordResetExpires
   });
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(process.env.NODE_ENV);
   await new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, res);
 });
@@ -65,8 +64,6 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
-
-  //console.log(user);
 
   // 3) If everything is ok, SEND TOKEN TO THE CLIENT
   createSendToken(user, 200, res);
@@ -186,7 +183,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: 'Token sent to email!'
     });
   } catch (err) {
-    console.log(err);
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
