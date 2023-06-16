@@ -19,7 +19,11 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: [`https://www.natours.dev/img/tours/${tour.imageCover}`]
+            images: [
+              `https://filips-natours-project.onrender.com//img/tours/${
+                tour.imageCover
+              }`
+            ]
           },
           unit_amount: tour.price * 100
         },
